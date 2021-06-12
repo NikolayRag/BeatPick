@@ -1,0 +1,45 @@
+<html><head>
+
+<script type="text/javascript" src='wmidi.js'></script>
+
+
+<script>
+/////////////////////////
+WebMidi.enable();
+
+
+var midiEvt = false;
+
+function midiRun(_state){
+	if (_state){
+		if (midiEvt)
+			return;
+	
+		midiEvt = setInterval(function(){WebMidi.outputs[0].playNote("C3");}, 1000);
+
+		return;
+	}
+
+	clearInterval(midiEvt);
+	midiEvt = false;
+}
+
+
+function midiGo(){
+	WebMidi.outputs[0].sendControlChange(1,2,1);
+}
+/////////////////////////
+</script>
+
+</head>
+<body>
+
+<p>
+webmidi out
+</p>
+<button onclick='midiGo()'>Send</button>
+
+<input type="checkbox" onchange='midiRun(this.checked)'>repeat</button>
+
+</body>
+</html>
