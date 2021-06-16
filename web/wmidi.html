@@ -1,45 +1,37 @@
 <html><head>
 
+<script type="text/javascript" src='webmidi.js'></script>
+
 <script type="text/javascript" src='wmidi.js'></script>
-
-
-<script>
-/////////////////////////
-WebMidi.enable();
-
-
-var midiEvt = false;
-
-function midiRun(_state){
-	if (_state){
-		if (midiEvt)
-			return;
-	
-		midiEvt = setInterval(function(){WebMidi.outputs[0].playNote("C3");}, 1000);
-
-		return;
-	}
-
-	clearInterval(midiEvt);
-	midiEvt = false;
-}
-
-
-function midiGo(){
-	WebMidi.outputs[0].sendControlChange(1,2,1);
-}
-/////////////////////////
-</script>
 
 </head>
 <body>
 
 <p>
-webmidi out
+MIDI out
 </p>
-<button onclick='midiGo()'>Send</button>
 
-<input type="checkbox" onchange='midiRun(this.checked)'>repeat</button>
+
+<div id='midiLabel'>WebMidi...</div>
+<br>
+
+<div id='midiCtrl' style='display:none'>
+	<button onclick='midiGo()'>Send</button>
+
+	<input type="checkbox" onchange='midiRun(this.checked)'>repeat</input>
+
+
+<div>
+	<input type="range" min="0" max="127" step="1" value="0" oninput='midiCC(1,0,this.value)'></input>
+<br>
+	<input type="range" min="0" max="127" step="1" value="0" oninput='midiCC(1,1,this.value)'></input>
+<br>
+	<input type="range" min="0" max="127" step="1" value="0" oninput='midiCC(1,2,this.value)'></input>
+</div>
+
+<span id='pad' style='position:absolute;width:200px;height:100px;background:#000;'></span>
+</div>
+
 
 </body>
 </html>
